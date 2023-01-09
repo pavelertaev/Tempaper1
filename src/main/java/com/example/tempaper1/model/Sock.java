@@ -9,7 +9,7 @@ public class Sock {
     private Color color;
     private CottonPart cottonPart;
     private Size size;
-    private int quanitity;
+    private int quantity;
 
 
 

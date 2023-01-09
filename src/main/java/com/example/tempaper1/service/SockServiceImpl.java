@@ -1,5 +1,6 @@
 package com.example.tempaper1.service;
 
+import com.example.tempaper1.model.FileMassageException;
 import com.example.tempaper1.model.Sock;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -60,7 +61,7 @@ public class SockServiceImpl implements SockService {
         return false;
     }
 
-    private void readFromFile() {
+    private void readFromFile() throws FileMassageException {
         try {
             String json = fileService.readSocksFromFile();
             if (!json.isBlank()) {

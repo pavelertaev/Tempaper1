@@ -1,11 +1,13 @@
 package com.example.tempaper1.service;
 
 
+import com.example.tempaper1.model.FileMassageException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -46,7 +48,7 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
-    public void cleanSockFile() {
+    public void cleanSockFile() throws FileMassageException, FileNotFoundException {
         cleanFile(socksFileName);
     }
 
@@ -55,18 +57,18 @@ public class FilesServiceImpl implements FilesService {
             cleanFile(fileName);
             Files.writeString(Path.of(dataFilePath, fileName), json);
             return true;
-        } catch (IOException e) {
+        } catch (IOException | FileMassageException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    private String readFromFile(String fileName) {
+    private String readFromFile(String fileName) throws FileMassageException {
         try {
             return Files.readString(Path.of(dataFilePath, fileName));
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Ошибка чтения файла");
+            throw new FileMassageException( "Ошибка чтения файла");
         }
     }
 
@@ -76,18 +78,18 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
-    public String readSocksFromFile() {
+    public String readSocksFromFile() throws FileMassageException {
         return readFromFile(socksFileName);
     }
 
     @Override
-    public void cleanFile(String fileName) {
+    public void cleanFile(String fileName) throws FileNotFoundException, FileMassageException {
         try {
             Files.deleteIfExists(Path.of(dataFilePath, fileName));
             Files.createFile(Path.of(dataFilePath, fileName));
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Ошибка очистки файла");
+            throw new FileMassageException("Ошибка очистки файла");
         }
     }
 }
