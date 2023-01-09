@@ -26,7 +26,7 @@ public class FilesServiceImpl implements FilesService {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new RuntimeException("Файл не был создан");
         }
 
     }
@@ -36,7 +36,7 @@ public class FilesServiceImpl implements FilesService {
         try {
             return Files.createTempFile(Path.of(dataFilePath), "tempfile", suffix);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Ошибка создания временного файла");
         }
     }
 
@@ -66,7 +66,7 @@ public class FilesServiceImpl implements FilesService {
             return Files.readString(Path.of(dataFilePath, fileName));
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new RuntimeException("Ошибка чтения файла");
         }
     }
 
@@ -87,7 +87,7 @@ public class FilesServiceImpl implements FilesService {
             Files.createFile(Path.of(dataFilePath, fileName));
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new RuntimeException("Ошибка очистки файла");
         }
     }
 }

@@ -70,7 +70,7 @@ public class SockServiceImpl implements SockService {
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new RuntimeException("Ошибка!Невозможно прочитать файл");
         }
     }
 
@@ -80,7 +80,7 @@ public class SockServiceImpl implements SockService {
             fileService.saveSockToFile(json);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new RuntimeException("Ошибка!Невозможно сохранить файл");
         }
     }
 
@@ -93,7 +93,7 @@ public class SockServiceImpl implements SockService {
                 writer.append("\n");
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Ошибка создания TXT файла");
         }
         return path.toFile();
     }
